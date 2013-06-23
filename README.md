@@ -1,4 +1,4 @@
-# grunt-twig
+# grunt-twig [![Build Status](https://travis-ci.org/adamdicarlo/grunt-twig.png)](https://travis-ci.org/adamdicarlo/grunt-twig)
 
 > Compiles and concatenates twig.js templates; currently, just for use in the browser.
 
