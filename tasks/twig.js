@@ -13,11 +13,15 @@ module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('twig', 'Your task description goes here.', function() {
+  grunt.registerMultiTask('twig', 'Compile and concatenate Twig templates.', function() {
+    var Twig = require('twig');
+
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
-      punctuation: '.',
-      separator: ', '
+      // @todo: a way to control the "base" of filepath.
+      // @todo: a configurable prefix?
+      jst_variable: 'JST',
+      separator: ';\n'
     });
 
     // Iterate over all specified file groups.
@@ -32,12 +36,16 @@ module.exports = function(grunt) {
           return true;
         }
       }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
+        // Read file source and run it through Twig's almost-compiler, which
+        // produces an object that can be used to render the template.
+        var source = grunt.file.read(filepath);
+        var template = JSON.stringify(Twig.twig({ data: source }));
+        return options.jst_variable + '["' + filepath + '"]=' + template;
       }).join(grunt.util.normalizelf(options.separator));
 
-      // Handle options.
-      src += options.punctuation;
+      // Resulting code must initialize template array if needed.
+      src = 'var ' + options.jst_variable + '=' + options.jst_variable +
+        '||[];\n' + src;
 
       // Write the destination file.
       grunt.file.write(f.dest, src);

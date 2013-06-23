@@ -1,6 +1,6 @@
 {
   "name": "grunt-twig",
-  "description": "The best Grunt plugin ever.",
+  "description": "Grunt task to compile and concatenate twig.js templates.",
   "version": "0.1.0",
   "homepage": "https://github.com/adamdicarlo/grunt-twig",
   "author": {
@@ -38,5 +38,8 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "twig": "~0.5.8"
+  }
 }

@@ -30,18 +30,18 @@ exports.twig = {
   default_options: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    var actual = grunt.file.read('tmp/default_options.js');
+    var expected = grunt.file.read('test/expected/default_options.js');
+    test.equal(actual, expected, 'templates should be "compiled" and stored in JST variable.');
 
     test.done();
   },
-  custom_options: function(test) {
+  jst_variable_option: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    var actual = grunt.file.read('tmp/jst_variable_option.js');
+    var expected = grunt.file.read('test/expected/jst_variable_option.js');
+    test.equal(actual, expected, 'templates should be stored in the variable indicated by jst_variable option.');
 
     test.done();
   },

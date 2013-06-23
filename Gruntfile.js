@@ -34,16 +34,23 @@ module.exports = function(grunt) {
         options: {
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          'tmp/default_options.js': [
+            'test/fixtures/conditional.twig',
+            'test/fixtures/greeting.twig',
+            'test/fixtures/weather.twig'
+          ],
         },
       },
-      custom_options: {
+      jst_variable_option: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!',
+          jst_variable: 'myTemplates'
         },
         files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          'tmp/jst_variable_option.js': [
+            'test/fixtures/conditional.twig',
+            'test/fixtures/greeting.twig',
+            'test/fixtures/weather.twig'
+          ],
         },
       },
     },
