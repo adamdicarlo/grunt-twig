@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 
       // Resulting code must initialize template array if needed.
       src = 'var ' + options.jst_variable + '=' + options.jst_variable +
-        '||[];\n' + src;
+        '||{};\n' + src;
 
       // Write the destination file.
       grunt.file.write(f.dest, src);
