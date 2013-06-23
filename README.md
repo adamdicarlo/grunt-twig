@@ -2,7 +2,7 @@
 
 > Compiles and concatenates twig.js templates; currently, just for use in the browser.
 
-[twig.js](https://github.com/justjohn/twigjs) does not yet have the ability to
+[twig.js](https://github.com/justjohn/twig.js) does not yet have the ability to
 compile templates to actual JavaScript code. It instead compiles templates into
 data structures that it can easily use later to render the template with a
 given data set (or "context").
