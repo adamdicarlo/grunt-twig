@@ -1,6 +1,14 @@
 # grunt-twig
 
-> The best Grunt plugin ever.
+> Compiles and concatenates twig.js templates; currently, just for use in the browser.
+
+[twig.js](https://github.com/justjohn/twigjs) does not yet have the ability to
+compile templates to actual JavaScript code. It instead compiles templates into
+data structures that it can easily use later to render the template with a
+given data set (or "context").
+
+Thus, the application still needs to load twig.js in order to use the
+compiled templates.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -37,49 +45,74 @@ grunt.initConfig({
 
 ### Options
 
+#### options.jst_variable
+Type: `String`
+Default value: `'JST'`
+
+The name of the global variable that should store all the templates.
+
 #### options.separator
 Type: `String`
-Default value: `',  '`
+Default value: `';\n'`
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+A string that is inserted between each compiled template when
+concatenating templates.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, the default options are used to compile two simple templates.
 
 ```js
 grunt.initConfig({
   twig: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'dest/my-compiled-templates.js': [
+        'templates/testing.twig',
+        'templates/hello.twig'
+      ]
     },
   },
 })
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+If the `testing.twig` file has the content `Testing` and the `hello.twig` file
+has the content `Hello, {{ name }}`, the generated result would be something
+like:
+
+```js
+var JST=JST||[];
+JST["templates/testing.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Testing\n"}]};
+JST["templates/hello.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Hello, "},{"type":"output","stack":[{"type":"Twig.expression.type.variable","value":"name","match":["name"]}]},{"type":"raw","value":"\n"}]}
+```
+
+#### The jst_variable Option
+In this example, the jst_variable option is use to customize the name of the array that the compiled templates will be stored in.
 
 ```js
 grunt.initConfig({
   twig: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      jst_variable: 'myTemplates'
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'dest/my-compiled-templates.js': [
+        'templates/testing.twig',
+        'templates/hello.twig'
+      ]
     },
   },
 })
+```
+
+In this case, the resulting file, `dest/my-compiled-templates.js` will look
+something like:
+
+```js
+var JST=JST||[];
+JST["templates/testing.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Testing\n"}]};
+JST["templates/hello.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Hello, "},{"type":"output","stack":[{"type":"Twig.expression.type.variable","value":"name","match":["name"]}]},{"type":"raw","value":"\n"}]}
 ```
 
 ## Contributing
