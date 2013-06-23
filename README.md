@@ -82,7 +82,7 @@ has the content `Hello, {{ name }}`, the generated result would be something
 like:
 
 ```js
-var JST=JST||[];
+var JST=JST||{};
 JST["templates/testing.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Testing\n"}]};
 JST["templates/hello.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Hello, "},{"type":"output","stack":[{"type":"Twig.expression.type.variable","value":"name","match":["name"]}]},{"type":"raw","value":"\n"}]}
 ```
@@ -110,7 +110,7 @@ In this case, the resulting file, `dest/my-compiled-templates.js` will look
 something like:
 
 ```js
-var myTemplates=myTemplates||[];
+var myTemplates=myTemplates||{};
 myTemplates["templates/testing.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Testing\n"}]};
 myTemplates["templates/hello.twig"]={"options":{},"blocks":{},"child":{"blocks":{}},"extend":null,"tokens":[{"type":"raw","value":"Hello, "},{"type":"output","stack":[{"type":"Twig.expression.type.variable","value":"name","match":["name"]}]},{"type":"raw","value":"\n"}]}
 ```
