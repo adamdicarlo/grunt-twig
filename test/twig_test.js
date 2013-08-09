@@ -30,18 +30,20 @@ exports.twig = {
   default_options: function(test) {
     test.expect(1);
 
+    // @todo: Use node-falafel + cssauron-falafel to examine the AST of the
+    // code we've generated, rather than this brute-force method?
     var actual = grunt.file.read('tmp/default_options.js');
     var expected = grunt.file.read('test/expected/default_options.js');
-    test.equal(actual, expected, 'templates should be "compiled" and stored in JST variable.');
+    test.equal(actual, expected, 'templates should be compiled and stored in JST variable.');
 
     test.done();
   },
-  jst_variable_option: function(test) {
+  variable_option: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/jst_variable_option.js');
-    var expected = grunt.file.read('test/expected/jst_variable_option.js');
-    test.equal(actual, expected, 'templates should be stored in the variable indicated by jst_variable option.');
+    var actual = grunt.file.read('tmp/variable_option.js');
+    var expected = grunt.file.read('test/expected/variable_option.js');
+    test.equal(actual, expected, 'templates should be compiled and stored in the variable indicated by "variable" option.');
 
     test.done();
   },

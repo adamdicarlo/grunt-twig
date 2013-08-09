@@ -31,8 +31,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     twig: {
       default_options: {
-        options: {
-        },
+        options: {},
         files: {
           'tmp/default_options.js': [
             'test/fixtures/conditional.twig',
@@ -41,18 +40,24 @@ module.exports = function(grunt) {
           ],
         },
       },
-      jst_variable_option: {
+      variable_option: {
         options: {
-          jst_variable: 'myTemplates'
+          variable: 'myTemplates'
         },
         files: {
-          'tmp/jst_variable_option.js': [
+          'tmp/variable_option.js': [
             'test/fixtures/conditional.twig',
             'test/fixtures/greeting.twig',
             'test/fixtures/weather.twig'
           ],
         },
       },
+      example1: {
+        options: {},
+        files: {
+          'tmp/my-compiled-templates.js': [ 'src/testing.twig', 'src/hello.twig' ]
+        }
+      }
     },
 
     // Unit tests.
