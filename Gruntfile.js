@@ -8,6 +8,8 @@
 
 'use strict';
 
+var path = require('path');
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -49,6 +51,18 @@ module.exports = function(grunt) {
             'test/fixtures/conditional.twig',
             'test/fixtures/greeting.twig',
             'test/fixtures/weather.twig'
+          ],
+        },
+      },
+      template_key_option: {
+        options: {
+          template_key: path.basename
+        },
+        files: {
+          'tmp/template_key_option.js': [
+            'test/fixtures/greeting.twig',
+            'test/fixtures/weather.twig',
+            'test/fixtures/conditional.twig'
           ],
         },
       },

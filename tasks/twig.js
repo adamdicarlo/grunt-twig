@@ -20,7 +20,8 @@ module.exports = function(grunt) {
       variable: 'window.JST',
       separator: '\n',
       template: '{{ variable }} = {{ variable }} || {};\n{{ templates }}\n',
-      each_template: '{{ variable }}["{{ filepath }}"] = Twig.twig({ data: {{ compiled }} });'
+      each_template: '{{ variable }}["{{ filepath }}"] = Twig.twig({ data: {{ compiled }} });',
+      template_key: function(path) { return path; }
     });
 
     // Compile *our* templates.
@@ -44,7 +45,7 @@ module.exports = function(grunt) {
 
         return options.each_template.render({
           variable: options.variable,
-          filepath: filepath,
+          filepath: options.template_key(filepath),
           compiled: JSON.stringify(Twig.twig({ data: source }).tokens),
         });
       }).join(grunt.util.normalizelf(options.separator));

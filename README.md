@@ -89,6 +89,15 @@ Variables available:
 * compiled (string): twig.js's data structure (JSON) of tokens
   resulting from compiling the template.
 
+#### options.template_key
+Type: `function(string) -> string`
+Default value: `function(path) { return path; }`
+
+A function used to create a template hash key from a template's path.
+This determines where the template is found in the resulting template
+hash; e.g., `window.JST['templates/list.html.twig']` vs
+`window.JST['list.html.twig']`.
+
 ### Usage Examples
 
 #### Default Options
