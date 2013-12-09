@@ -46,27 +46,28 @@ grunt.initConfig({
 ### Options
 
 #### options.amd_wrapper
-Type: `boolean`
+Type: `boolean`  
 Default value: `true`
 
 Determines whether the output will be wrapped in a `require(["twig"], ...)`
 call.
 
 #### options.variable
-Type: `string`
+Type: `string`  
 Default value: `'JST'`
 
 The name of the global variable that should store all the templates.
 
 #### options.separator
 Type: `string`
+
 Default value: `';\n'`
 
 A string that is inserted between each compiled template when
 concatenating templates.
 
 #### options.template
-Type: `string`
+Type: `string`  
 Default value: `'{{ variable }} = {{ variable }} || {};\n{{
 templates }}\n'`
 
@@ -77,7 +78,7 @@ Variables available:
 * templates (string): All compiled templates.
 
 #### options.each_template
-Type: `string`
+Type: `string`  
 Default value: `'{{ variable }}["{{ filepath }}"] = Twig.twig({
 data: {{ compiled }} });'`
 
@@ -90,7 +91,7 @@ Variables available:
   resulting from compiling the template.
 
 #### options.template_key
-Type: `function(string) -> string`
+Type: `function(string) -> string`  
 Default value: `function(path) { return path; }`
 
 A function used to create a template hash key from a template's path.
