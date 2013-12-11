@@ -43,11 +43,15 @@ module.exports = function(grunt) {
         // produces an object that can be used to render the template.
         var source = grunt.file.read(filepath);
 
-        return options.each_template.render({
-          variable: options.variable,
-          filepath: options.template_key(filepath),
-          compiled: JSON.stringify(Twig.twig({ data: source }).tokens),
-        });
+        try {
+          return options.each_template.render({
+            variable: options.variable,
+            filepath: options.template_key(filepath),
+            compiled: JSON.stringify(Twig.twig({ data: source }).tokens),
+          });
+        } catch (e) {
+          grunt.log.warn(e);
+        }
       }).join(grunt.util.normalizelf(options.separator));
 
       // Apply overall template.
