@@ -11,7 +11,7 @@ Thus, your application will still need to load twig.js in order to use the
 compiled templates.
 
 ## Getting Started
-This plugin requires Grunt `~0.4.1`
+This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -168,4 +168,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+* 1.0.0: Update for Grunt 1.0.0.
+* 0.1.3: Update to twig 0.7.1.
+* 0.1.2: Add try/catch block around rendering of template. (Matt Farmer)
 * 0.1.1: Added template_key option.
