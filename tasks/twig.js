@@ -17,12 +17,17 @@ module.exports = function(grunt) {
     // templates. (Because we heard you like Twig templates.)
     var options = this.options({
       amd_wrapper: true,
+      amd_define: false,
       variable: 'window.JST',
       separator: '\n',
-      template: '{{ variable }} = {{ variable }} || {};\n{{ templates }}\n',
       each_template: '{{ variable }}["{{ filepath }}"] = Twig.twig({ data: {{ compiled }} });',
       template_key: function(path) { return path; }
     });
+
+    if (options.template == undefined) {
+        var template = options.variable.indexOf('window.') === 0 ? '' : 'var ';
+        options.template = template + '{{ variable }} = {{ variable }} || {};\n{{ templates }}\n';
+    }
 
     // Compile *our* templates.
     options.template = Twig.twig({ data: options.template });
@@ -52,14 +57,20 @@ module.exports = function(grunt) {
         } catch (e) {
           grunt.log.warn(e);
         }
-      }).join(grunt.util.normalizelf(options.separator));
+      }).join(options.separator);
 
       // Apply overall template.
       src = options.template.render({ variable: options.variable, templates: src });
 
       // Provide an AMD wrapper if requested.
       if (options.amd_wrapper) {
-        src = 'require(["twig"], function(Twig) {\n' + src + '});\n';
+        if (grunt.util.kindOf(options.amd_define) == 'string') {
+          src = 'define("' + options.amd_define + '", ["twig"], function(Twig) {\n' + src + 'return ' + options.variable + ';\n});\n';
+        } else if(options.amd_define) {
+          src = 'define(["twig"], function(Twig) {\n' + src + 'return ' + options.variable + ';\n});\n';
+        } else {
+          src = 'require(["twig"], function(Twig) {\n' + src + '});\n';
+        }
       }
 
       // Write the destination file.

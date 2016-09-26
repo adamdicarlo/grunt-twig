@@ -30,7 +30,8 @@ exports.twig = {
     var names = [
       'default_options',
       'variable_option',
-      'template_key_option'
+      'template_key_option',
+      'amd_define_option'
     ];
 
     test.expect(names.length);
