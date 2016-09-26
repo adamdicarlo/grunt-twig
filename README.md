@@ -52,9 +52,26 @@ Default value: `true`
 Determines whether the output will be wrapped in a `require(["twig"], ...)`
 call.
 
+#### options.amd_define
+Type: `boolean` or `string`  
+Default value: false         
+Requirement: `options.amd_wrapper` must be set to `true`
+
+Determines whether to define the AMD module or not.
+#### Examples
+* `options.amd_define: true` 
+    ```javascript 
+    define(["twig"], function(Twig) { ... return windows.JST; });
+    ``` 
+* `options.amd_define: 'my-templates'`
+    ```javascript 
+    define('my-templates', ["twig"], function(Twig) { ... return windows.JST; });
+    ``` 
+    (`windows.JST` may be replaced by `options.variable` value)
+
 #### options.variable
 Type: `string`  
-Default value: `'JST'`
+Default value: `'window.JST'`
 
 The name of the global variable that should store all the templates.
 
