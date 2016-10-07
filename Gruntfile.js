@@ -66,6 +66,18 @@ module.exports = function(grunt) {
           ],
         },
       },
+      amd_define_option: {
+        options: {
+          amd_define: 'my-templates',
+        },
+        files: {
+          'tmp/amd_define_option.js': [
+            'test/fixtures/greeting.twig',
+            'test/fixtures/weather.twig',
+            'test/fixtures/conditional.twig'
+          ],
+        },
+      },
       example1: {
         options: {},
         files: {
