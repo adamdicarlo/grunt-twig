@@ -61,13 +61,13 @@ Determines whether to define the AMD module or not.
 #### Examples
 * `options.amd_define: true` 
     ```javascript 
-    define(["twig"], function(Twig) { ... return windows.JST; });
+    define(["twig"], function(Twig) { ... return window.JST; });
     ``` 
 * `options.amd_define: 'my-templates'`
     ```javascript 
-    define('my-templates', ["twig"], function(Twig) { ... return windows.JST; });
+    define('my-templates', ["twig"], function(Twig) { ... return window.JST; });
     ``` 
-    (`windows.JST` may be replaced by `options.variable` value)
+    (`window.JST` may be replaced by `options.variable` value)
 
 #### options.variable
 Type: `string`  
