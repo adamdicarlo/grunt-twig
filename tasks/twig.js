@@ -11,26 +11,21 @@
 module.exports = function(grunt) {
   grunt.registerMultiTask('twig', 'Compile and concatenate Twig templates.', function() {
     var Twig = require('twig');
+    var path = require('path');
 
     // Merge task-specific and/or target-specific options with these defaults.
     // We use Twig templates to define the output format of your compiled Twig
     // templates. (Because we heard you like Twig templates.)
     var options = this.options({
       amd_wrapper: true,
-      amd_define: false,
-      variable: 'window.JST',
       separator: '\n',
-      template: null,
-      each_template: '{{ variable }}["{{ filepath }}"] = Twig.twig({ data: {{ compiled }} });',
-      template_key: function(path) { return path; }
+      template: 'var templates = {};\n{{ templates }}\nreturn templates;',
+      each_template: ['templates["{{ filepath }}"] = Twig.twig({',
+                      '    data: {{ compiled }},',
+                      '    id: "{{ filepath }}",',
+                      '    allowInlineIncludes: true',
+                      '});\n'].join('\n')
     });
-
-    if (!options.template) {
-        var template = options.variable.indexOf('window.') === 0
-            ? '{{ variable }} = {{ variable }} ||'
-            : 'var {{ variable }} =';
-        options.template = template + ' {};\n{{ templates }}\n';
-    }
 
     // Compile *our* templates.
     options.template = Twig.twig({ data: options.template });
@@ -39,42 +34,22 @@ module.exports = function(grunt) {
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
       // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files.
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        }
-        return true;
-      }).map(function(filepath) {
+      var src = f.src.map(function(filepath) {
         // Read file source and run it through Twig's almost-compiler, which
         // produces an object that can be used to render the template.
         var source = grunt.file.read(filepath);
 
-        try {
-          return options.each_template.render({
-            variable: options.variable,
-            filepath: options.template_key(filepath),
-            compiled: JSON.stringify(Twig.twig({ data: source }).tokens),
-          });
-        } catch (e) {
-          grunt.log.warn(e);
-        }
-      }).join(options.separator);
+        return options.each_template.render({
+          filepath: filepath,
+          compiled: JSON.stringify(Twig.twig({ data: source }).tokens),
+        });
+      }).join(grunt.util.normalizelf(options.separator));
 
       // Apply overall template.
-      src = options.template.render({ variable: options.variable, templates: src });
+      src = options.template.render({ templates: src });
 
-      // Provide an AMD wrapper if requested.
-      if (options.amd_wrapper) {
-        if (grunt.util.kindOf(options.amd_define) == 'string') {
-          src = 'define("' + options.amd_define + '", ["twig"], function(Twig) {\n' + src + 'return ' + options.variable + ';\n});\n';
-        } else if(options.amd_define) {
-          src = 'define(["twig"], function(Twig) {\n' + src + 'return ' + options.variable + ';\n});\n';
-        } else {
-          src = 'require(["twig"], function(Twig) {\n' + src + '});\n';
-        }
-      }
+      // Always provide a AMD wrapper
+      src = 'define(["twig"], function(Twig) {\n' + src + '});\n';
 
       // Write the destination file.
       grunt.file.write(f.dest, src);
