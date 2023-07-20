@@ -1,3 +1,9 @@
+# Not maintained
+
+I built this in 2013 for my first SPA project, and haven't used Twig templates since then.
+
+---
+
 # grunt-twig [![Build Status](https://travis-ci.org/adamdicarlo/grunt-twig.png)](https://travis-ci.org/adamdicarlo/grunt-twig)
 
 > Compiles and concatenates twig.js templates; currently, just for use in the browser.
